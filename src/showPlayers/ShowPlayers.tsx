@@ -6,8 +6,9 @@ interface ShowPlayersProps {
   players: Player[],
   onPlayerCheck: (id:number)=>void
   onCardClick:(index:number)=>void
+  onButtonClick:()=>void
 }
-const ShowPlayers: React.FC<ShowPlayersProps> = ({players,onPlayerCheck,onCardClick}) => {
+const ShowPlayers: React.FC<ShowPlayersProps> = ({players,onPlayerCheck,onCardClick,onButtonClick}) => {
   return (
     <div className="w-80 text-white flex flex-col bg-app-boxes p-4 rounded-md">
       <h2 className="text-3xl">Buscar jugadores</h2>
@@ -25,7 +26,9 @@ const ShowPlayers: React.FC<ShowPlayersProps> = ({players,onPlayerCheck,onCardCl
                 <p className='text-xl text-app-text'>{player.fullName}</p>
               </div>
               <div>
-                <input type='checkbox' onClick={()=>onPlayerCheck(index)}></input>
+                <input type='checkbox' onClick={(e) => {
+                  e.stopPropagation();
+                  onPlayerCheck(index)}}></input>
               </div>
             </div>
             <div className='flex flex-row gap-1 max-w-fit items-center'>
@@ -45,7 +48,8 @@ const ShowPlayers: React.FC<ShowPlayersProps> = ({players,onPlayerCheck,onCardCl
         ))}
       </article>
       <footer className='self-end h-10 item-center justify-center w-full'>
-        <button className='bg-app-button py-1 px-8 font-bold'>Enviar Notificación</button>
+        <button onClick={onButtonClick}
+        className='bg-app-button py-1 px-8 font-bold'>Enviar Notificación</button>
       </footer>
       
     </div>

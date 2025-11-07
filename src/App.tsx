@@ -6,6 +6,7 @@ import Nav from "./nav/Nav";
 import ShowPlayers from "./showPlayers/ShowPlayers";
 import { Player } from "./types/Player";
 import ShowDetailModal from "./showDetailModal/ShowDetailModal";
+import { Loading } from "./loadingScreen/LoadingScreen";
 
 export const MOCK_PLAYERS: Player[] = [
   new Player({
@@ -39,13 +40,22 @@ function App() {
   const [selectedPlayer,setSelectedPlayer]=useState<Player|null>(null)
 
   const onCardClick=(index:number)=>{
-    prompt(index.toString())
     setSelectedPlayer(players[index])
   }
   const onModalClose=()=>{
     setSelectedPlayer(null)
   }
-  
+
+  const [loadingMessage,setLoadingMessage]=useState<string>("")
+  const [showLoading,setShowLoading]=useState<boolean>(false)
+
+  const sendNotifications=()=>{
+    setLoadingMessage("Enviando notificaciones...")
+    setShowLoading(true)
+    setTimeout(()=>{
+      setShowLoading(false)
+    },3000)
+  }
   return (
     <div className="App w-full h-screen bg-app-background p-4">
       <Nav></Nav>
@@ -54,11 +64,15 @@ function App() {
         <ShowPlayers 
         players={players}
         onPlayerCheck={checkPlayer}
+        onButtonClick={sendNotifications}
         onCardClick={onCardClick}></ShowPlayers>
       </div>
       <ShowDetailModal
       player={selectedPlayer}
       onClose={onModalClose}></ShowDetailModal>
+      <Loading
+      show={showLoading}
+      message={loadingMessage}></Loading>
     </div>
   );
 }
