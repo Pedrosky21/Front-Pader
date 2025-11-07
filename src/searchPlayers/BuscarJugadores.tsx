@@ -6,19 +6,21 @@ interface BuscarJugadoresProps {
 
 const BuscarJugadores: React.FC<BuscarJugadoresProps> = ({ onJsonSend }) => {
   const [jsonInput, setJsonInput] = useState<string>(JSON.stringify({
-    match_id: 23,
-    categories: "NINTH",
-    elo_range: [1000, 1500],
+    match_id: "match-1",
+    min_elo: 1400,
+    max_elo: 1600,
     age_range: [25, 50],
     gender_preference: "Male",
     required_players: 3,
-    location: {
-        lat: 10,
-        lon: 10
-    },
-    match_time: "10:00",
-    required_time: 90,
-    preferred_position: "FOREHAND"
+    zone: "Nueva Cordoba",
+    latitude: -31.42,
+    longitude: -64.1850,
+    time_slot: "19:00",
+    duration: 90,
+    categories: ["SEVENTH", "SIXTH"],
+    gender_preferences: "MIXED",
+    preferred_positions: "FOREHAND"
+
   }, null, 2)); // Formateado con indentación
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -45,7 +47,7 @@ const BuscarJugadores: React.FC<BuscarJugadoresProps> = ({ onJsonSend }) => {
       />
       <br />
       <div className="flex justify-center w-full">
-        <button className="bg-app-button py-1 px-8 font-bold" onClick={e => handleClick}>Buscar</button>
+        <button className="bg-app-button py-1 px-8 font-bold" onClick={e => handleClick()}>Buscar</button>
       </div>
     </div>
   );

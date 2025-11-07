@@ -9,45 +9,9 @@ import { buscarJugadores } from "./services/players.service";
 import { Loading } from "./loadingScreen/LoadingScreen";
 import toast, { Toaster } from "react-hot-toast";
 
-export const MOCK_PLAYERS: Player[] = [
-  new Player({
-    player_name: "Lionel Messi",
-    elo: "2450",
-    distance_km: "2.4",
-    reasons: "Excelente precisión y control del balón",
-    compatibility_sumary:
-      "Altamente compatible con tu estilo de juego ofensivo",
-    invitation_message: "¿Listo para armar jugadas increíbles juntos?",
-  }),
-  new Player({
-    player_name: "Cristiano Ronaldo",
-    elo: "2430",
-    distance_km: "5.8",
-    reasons: "Gran capacidad física y definición",
-    compatibility_sumary: "Compatible en jugadas rápidas y contraataques",
-    invitation_message: "¡Vamos a romper redes juntos!",
-  }),
-  new Player({
-    player_name: "Lionel Messi",
-    elo: "2450",
-    distance_km: "2.4",
-    reasons: "Excelente precisión y control del balón",
-    compatibility_sumary:
-      "Altamente compatible con tu estilo de juego ofensivo",
-    invitation_message: "¿Listo para armar jugadas increíbles juntos?",
-  }),
-  new Player({
-    player_name: "Lionel Messi",
-    elo: "2450",
-    distance_km: "2.4",
-    reasons: "Excelente precisión y control del balón",
-    compatibility_sumary:
-      "Altamente compatible con tu estilo de juego ofensivo",
-    invitation_message: "¿Listo para armar jugadas increíbles juntos?",
-  }),
-];
+
 function App() {
-  const [players, setPlayers] = useState<Player[]>(MOCK_PLAYERS);
+  const [players, setPlayers] = useState<Player[]>([]);
   const [checkedPlayers, setCheckedPlayers] = useState<number[]>([]);
 
   const checkPlayer = (id: number) => {
@@ -60,10 +24,15 @@ function App() {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
   const handleJsonFromChild = async (json: string) => {
+    console.log(json);
     try {
+      setLoadingMessage("Buscando jugadores...");
+      setShowLoading(true);
       const payload = JSON.parse(json); // Convertir string JSON a objeto
       const data = await buscarJugadores(payload); // POST al backend
-      setPlayers(data); // Actualizar lista de jugadores con la respuesta
+      console.log(data.candidates);
+      setPlayers(data.candidates.map((jugador: any) => new Player(jugador.metadata))); // Actualizar lista de jugadores con la respuesta
+      setShowLoading(false);
     } catch (error) {
       alert("JSON inválido o error buscando jugadores");
       console.error(error);
@@ -115,7 +84,7 @@ function App() {
     }, 3000);
   };
   return (
-    <div className="App w-full h-full flex flex-col bg-app-background">
+    <div className="App w-full h-screen flex flex-col bg-app-background">
       <Nav></Nav>
       <div className="flex flex-col items-center text-center text-white p-4">
       <h1 className="text-3xl font-bold pb-2">Buscar jugadores</h1>

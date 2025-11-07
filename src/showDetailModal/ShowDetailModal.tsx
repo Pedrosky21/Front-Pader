@@ -38,7 +38,10 @@ const ShowDetailModal: React.FC<ShowDetailModalProps>=({player, onClose}) => {
             <article className='flex flex-col gap-4'>
               <section className='flex flex-col gap-2'>
                 <h4 className='text-xl font-medium'>Razones</h4>
-                <p>{player.reasons}</p>
+                <ul className='flex flex-col'>{
+                  player.reasons.map((res)=>(
+                    <li>{res}</li>
+                  ))}</ul>
               </section>
               <section className='flex flex-col gap-2'>
                 <h4 className='text-xl font-medium'>Explicación</h4>
