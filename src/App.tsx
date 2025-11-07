@@ -1,5 +1,3 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import BuscarJugadores from "./searchPlayers/BuscarJugadores";
 import Nav from "./nav/Nav";

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { buscarJugadores } from "../services/players.service";
 
 const BuscarJugadores: React.FC = () => {
   const [jsonInput, setJsonInput] = useState<string>(JSON.stringify({
@@ -20,8 +21,7 @@ const BuscarJugadores: React.FC = () => {
   const buscarJugador = () => {
     try {
       const data = JSON.parse(jsonInput);
-      console.log(data);
-      alert("Datos recopilados, revisa la consola");
+      buscarJugadores(data);
     } catch (error) {
       alert("JSON inválido. Revisa la sintaxis.");
     }
@@ -32,10 +32,10 @@ const BuscarJugadores: React.FC = () => {
       <h2 className="text-2xl font-semibold">Buscar jugadores</h2>
       <p className="text-app-text my-2">Ingrese los datos de su jugador ideal</p>
       <textarea
-        className="mt-2 bg-app-gray py-2 resize-none w-full flex-1"
+        className="mt-2 bg-app-gray py-2 resize-none w-full flex-1 leading-none"
         value={jsonInput}
         onChange={(e) => setJsonInput(e.target.value)}
-        rows={15}
+        rows={21}
         cols={50}
         style={{ fontFamily: "monospace" }}
       />
