@@ -6,7 +6,7 @@ import ShowPlayers from './showPlayers/ShowPlayers';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-app-background p-4">
       <BuscarJugadores></BuscarJugadores>
       <ShowPlayers></ShowPlayers>
     </div>
