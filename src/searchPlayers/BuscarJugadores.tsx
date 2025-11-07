@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { buscarJugadores } from "../services/players.service";
 
-const BuscarJugadores: React.FC = () => {
+interface BuscarJugadoresProps {
+  onJsonSend: (json: string) => void;
+}
+
+const BuscarJugadores: React.FC<BuscarJugadoresProps> = ({ onJsonSend }) => {
   const [jsonInput, setJsonInput] = useState<string>(JSON.stringify({
     match_id: 23,
     categories: "NINTH",
@@ -18,14 +21,15 @@ const BuscarJugadores: React.FC = () => {
     preferred_position: "FOREHAND"
   }, null, 2)); // Formateado con indentación
 
-  const buscarJugador = () => {
-    try {
-      const data = JSON.parse(jsonInput);
-      buscarJugadores(data);
-    } catch (error) {
-      alert("JSON inválido. Revisa la sintaxis.");
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setJsonInput(e.target.value);
   };
+
+  const handleClick = () => {
+    onJsonSend(jsonInput);
+  };
+
+
 
   return (
     <div className="w-80 h-auto text-white flex flex-col bg-app-boxes p-4 rounded-md">
@@ -34,14 +38,14 @@ const BuscarJugadores: React.FC = () => {
       <textarea
         className="mt-2 bg-app-gray py-2 resize-none w-full flex-1 leading-none"
         value={jsonInput}
-        onChange={(e) => setJsonInput(e.target.value)}
+        onChange={handleChange}
         rows={21}
         cols={50}
         style={{ fontFamily: "monospace" }}
       />
       <br />
       <div className="flex justify-center w-full">
-        <button className="bg-app-button py-1 px-8 font-bold" onClick={buscarJugador}>Buscar</button>
+        <button className="bg-app-button py-1 px-8 font-bold" onClick={e => handleClick}>Buscar</button>
       </div>
     </div>
   );
