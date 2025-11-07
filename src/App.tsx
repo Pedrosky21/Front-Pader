@@ -26,6 +26,24 @@ export const MOCK_PLAYERS: Player[] = [
     compatibility_sumary: "Compatible en jugadas rápidas y contraataques",
     invitation_message: "¡Vamos a romper redes juntos!",
   }),
+  new Player({
+    player_name: "Lionel Messi",
+    elo: "2450",
+    distance_km: "2.4",
+    reasons: "Excelente precisión y control del balón",
+    compatibility_sumary:
+      "Altamente compatible con tu estilo de juego ofensivo",
+    invitation_message: "¿Listo para armar jugadas increíbles juntos?",
+  }),
+  new Player({
+    player_name: "Lionel Messi",
+    elo: "2450",
+    distance_km: "2.4",
+    reasons: "Excelente precisión y control del balón",
+    compatibility_sumary:
+      "Altamente compatible con tu estilo de juego ofensivo",
+    invitation_message: "¿Listo para armar jugadas increíbles juntos?",
+  }),
 ];
 function App() {
   const [players, setPlayers] = useState<Player[]>(MOCK_PLAYERS);
@@ -70,8 +88,14 @@ function App() {
     },3000)
   }
   return (
-    <div className="App w-full h-screen bg-app-background p-4">
+    <div className="App w-full h-full flex flex-col bg-app-background">
       <Nav></Nav>
+      <div className="flex flex-col items-center text-center text-white p-4">
+      <h1 className="text-3xl font-bold pb-2">Buscar jugadores</h1>
+      <p className="text-center max-w-[40vw] self-center text-xl flex">Ingrese los datos de su rival ideal y el sistema le mostrara los jugadores mas compatibles</p>
+     
+        
+      </div> 
       <div className="flex justify-evenly">
         <BuscarJugadores onJsonSend={handleJsonFromChild}></BuscarJugadores>
         <ShowPlayers
