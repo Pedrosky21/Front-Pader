@@ -5,19 +5,22 @@ import { Player } from '../types/Player';
 interface ShowPlayersProps {
   players: Player[],
   onPlayerCheck: (id:number)=>void
+  onCardClick:(index:number)=>void
 }
-const ShowPlayers: React.FC<ShowPlayersProps> = ({players,onPlayerCheck}) => {
+const ShowPlayers: React.FC<ShowPlayersProps> = ({players,onPlayerCheck,onCardClick}) => {
   return (
     <div className="w-80 text-white flex flex-col bg-app-boxes p-4 rounded-md">
       <h2 className="text-3xl">Buscar jugadores</h2>
       <article className='flex flex-col gap-3 overflow-y-auto items-start h-[80%]'>
         {players.map((player, index) => (
-          <section key={index} className='flex flex-col w-full bg-app-gray rounded-lg p-2 gap-2'>
+          <section 
+          onClick={()=>onCardClick(index)}
+          key={index} className='flex flex-col w-full bg-app-gray rounded-lg p-2 gap-2'>
             <div className='flex  flex-row justify-between'>
               <div className='flex flex-row gap-1 max-w-fit items-cente'>
                   <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
                   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                  <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                 </svg>
                 <p className='text-xl text-app-text'>{player.fullName}</p>
               </div>

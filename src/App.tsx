@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import BuscarJugadores from "./searchPlayers/BuscarJugadores";
 import Nav from "./nav/Nav";
 import ShowPlayers from "./showPlayers/ShowPlayers";
 import { Player } from "./types/Player";
+import ShowDetailModal from "./showDetailModal/ShowDetailModal";
 
 export const MOCK_PLAYERS: Player[] = [
   new Player({
@@ -25,6 +26,7 @@ export const MOCK_PLAYERS: Player[] = [
   }),
 ];
 function App() {
+  const [players,setPlayers]=useState<Player[]>(MOCK_PLAYERS)
   const [checkedPlayers,setCheckedPlayers]=useState<number[]>([])
 
   const checkPlayer=(id:number)=>{
@@ -34,15 +36,29 @@ function App() {
       setCheckedPlayers(checkedPlayers.concat([id]))
     }
   }
+  const [selectedPlayer,setSelectedPlayer]=useState<Player|null>(null)
+
+  const onCardClick=(index:number)=>{
+    prompt(index.toString())
+    setSelectedPlayer(players[index])
+  }
+  const onModalClose=()=>{
+    setSelectedPlayer(null)
+  }
+  
   return (
     <div className="App w-full h-screen bg-app-background p-4">
       <Nav></Nav>
       <div className="flex justify-evenly">
         <BuscarJugadores></BuscarJugadores>
         <ShowPlayers 
-        players={MOCK_PLAYERS}
-        onPlayerCheck={checkPlayer}></ShowPlayers>
+        players={players}
+        onPlayerCheck={checkPlayer}
+        onCardClick={onCardClick}></ShowPlayers>
       </div>
+      <ShowDetailModal
+      player={selectedPlayer}
+      onClose={onModalClose}></ShowDetailModal>
     </div>
   );
 }
