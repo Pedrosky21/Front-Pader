@@ -11,8 +11,8 @@ interface ShowPlayersProps {
 const ShowPlayers: React.FC<ShowPlayersProps> = ({players,onPlayerCheck,onCardClick,onButtonClick}) => {
   return (
     <div className="w-80 text-white flex flex-col bg-app-boxes p-4 rounded-md">
-      <h2 className="text-3xl">Buscar jugadores</h2>
-      <article className='flex flex-col gap-3 overflow-y-auto items-start h-[80%]'>
+      <h2 className="text-2xl font-semibold pb-2">Buscar jugadores</h2>
+      <article className='flex flex-col gap-3 overflow-y-auto items-start max-h-[60vh] mb-6'>
         {players.map((player, index) => (
           <section 
           onClick={()=>onCardClick(index)}
@@ -26,7 +26,8 @@ const ShowPlayers: React.FC<ShowPlayersProps> = ({players,onPlayerCheck,onCardCl
                 <p className='text-xl text-app-text'>{player.fullName}</p>
               </div>
               <div>
-                <input type='checkbox' onClick={(e) => {
+                <input type='checkbox' 
+                onClick={(e) => {
                   e.stopPropagation();
                   onPlayerCheck(index)}}></input>
               </div>
