@@ -2,39 +2,15 @@ import React, { useState } from 'react'
 
 import { Player } from '../types/Player';
 
-export const MOCK_PLAYERS: Player[] = [
-  new Player({
-    player_name: "Lionel Messi",
-    elo: "2450",
-    distance_km: "2.4",
-    reasons: "Excelente precisión y control del balón",
-    compatibility_sumary: "Altamente compatible con tu estilo de juego ofensivo",
-    invitation_message: "¿Listo para armar jugadas increíbles juntos?"
-  }),
-  new Player({
-    player_name: "Cristiano Ronaldo",
-    elo: "2430",
-    distance_km: "5.8",
-    reasons: "Gran capacidad física y definición",
-    compatibility_sumary: "Compatible en jugadas rápidas y contraataques",
-    invitation_message: "¡Vamos a romper redes juntos!"
-  }),
-];
-const ShowPlayers = () => {
-  const players= MOCK_PLAYERS
-  const [checkedPlayers,setCheckedPlayers]=useState<number[]>([])
-
-  const checkPlayer=(id:number)=>{
-    if(checkedPlayers.includes(id)){
-      setCheckedPlayers(checkedPlayers.filter((playerId)=>playerId!==id))
-    }else{
-      setCheckedPlayers(checkedPlayers.concat([id]))
-    }
-  }
+interface ShowPlayersProps {
+  players: Player[],
+  onPlayerCheck: (id:number)=>void
+}
+const ShowPlayers: React.FC<ShowPlayersProps> = ({players,onPlayerCheck}) => {
   return (
     <div className="w-80 text-white flex flex-col bg-app-boxes p-4 rounded-md">
       <h2 className="text-3xl">Buscar jugadores</h2>
-      <article className='flex flex-col gap-3 overflow-y-auto items-start'>
+      <article className='flex flex-col gap-3 overflow-y-auto items-start h-[80%]'>
         {players.map((player, index) => (
           <section key={index} className='flex flex-col w-full bg-app-gray rounded-lg p-2 gap-2'>
             <div className='flex  flex-row justify-between'>
@@ -46,7 +22,7 @@ const ShowPlayers = () => {
                 <p className='text-xl text-app-text'>{player.fullName}</p>
               </div>
               <div>
-                <input type='checkbox' onClick={()=>checkPlayer(index)}></input>
+                <input type='checkbox' onClick={()=>onPlayerCheck(index)}></input>
               </div>
             </div>
             <div className='flex flex-row gap-1 max-w-fit items-center'>
@@ -65,8 +41,8 @@ const ShowPlayers = () => {
           </section>
         ))}
       </article>
-      <footer>
-        <button className='bg-app-button'>Enviar Notificación</button>
+      <footer className='self-end h-10 item-center justify-center w-full'>
+        <button className='bg-app-button py-1 px-8 font-bold'>Enviar Notificación</button>
       </footer>
       
     </div>
