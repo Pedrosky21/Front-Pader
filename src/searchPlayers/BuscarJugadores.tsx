@@ -20,9 +20,11 @@ const BuscarJugadores: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-xl">Buscar jugadores</h2>
+    <div className="w-80 text-white flex flex-col bg-app-boxes p-4 rounded-md">
+      <h2 className="text-3xl">Buscar jugadores</h2>
+      <p className="text-app-text">Ingrese los datos de su jugador ideal</p>
       <textarea
+        className="mt-2 bg-app-gray py-2"
         value={jsonInput}
         onChange={(e) => setJsonInput(e.target.value)}
         rows={15}
@@ -30,7 +32,9 @@ const BuscarJugadores: React.FC = () => {
         style={{ fontFamily: "monospace" }}
       />
       <br />
-      <button onClick={buscarJugador}>Buscar</button>
+      <div className="flex justify-center w-full">
+        <button className="bg-app-button" onClick={buscarJugador}>Buscar</button>
+      </div>
     </div>
   );
 };

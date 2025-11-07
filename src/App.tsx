@@ -5,7 +5,7 @@ import BuscarJugadores from './searchPlayers/BuscarJugadores';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-app-background p-4">
       <BuscarJugadores></BuscarJugadores>
     </div>
   );
