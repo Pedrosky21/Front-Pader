@@ -7,6 +7,7 @@ import { Player } from "./types/Player";
 import ShowDetailModal from "./showDetailModal/ShowDetailModal";
 import { buscarJugadores } from "./services/players.service";
 import { Loading } from "./loadingScreen/LoadingScreen";
+import toast, { Toaster } from "react-hot-toast";
 
 export const MOCK_PLAYERS: Player[] = [
   new Player({
@@ -40,7 +41,6 @@ function App() {
   };
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
-
   const handleJsonFromChild = async (json: string) => {
     try {
       const payload = JSON.parse(json); // Convertir string JSON a objeto
@@ -52,23 +52,50 @@ function App() {
     }
   };
 
-  const onCardClick=(index:number)=>{
-    setSelectedPlayer(players[index])
-  }
-  const onModalClose=()=>{
-    setSelectedPlayer(null)
-  }
+  const onCardClick = (index: number) => {
+    setSelectedPlayer(players[index]);
+  };
+  const onModalClose = () => {
+    setSelectedPlayer(null);
+  };
 
-  const [loadingMessage,setLoadingMessage]=useState<string>("")
-  const [showLoading,setShowLoading]=useState<boolean>(false)
+  const [loadingMessage, setLoadingMessage] = useState<string>("");
+  const [showLoading, setShowLoading] = useState<boolean>(false);
 
-  const sendNotifications=()=>{
-    setLoadingMessage("Enviando notificaciones...")
-    setShowLoading(true)
-    setTimeout(()=>{
-      setShowLoading(false)
-    },3000)
-  }
+  const sendNotifications = () => {
+    setLoadingMessage("Enviando notificaciones...");
+    setShowLoading(true);
+    setTimeout(() => {
+      setShowLoading(false);
+      // toast.success("Notificaciones enviadas");
+      toast.custom((t) => (
+        <div
+          className={`flex space-x-2 h-20 items-center bg-app-gray outline outline-white shadow-lg rounded-xl py-2 px-6 ${
+            t.visible ? "animate-custom-enter" : "animate-custom-leave"
+          }`}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="size-6 text-green-500"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m4.5 12.75 6 6 9-13.5"
+            />
+          </svg>
+
+          <p className="text-white">
+            Notificaciones enviadas
+          </p>
+        </div>
+      ));
+    }, 3000);
+  };
   return (
     <div className="App w-full h-screen bg-app-background p-4">
       <Nav></Nav>
@@ -77,7 +104,7 @@ function App() {
         <ShowPlayers
           players={players}
           onPlayerCheck={checkPlayer}
-        onButtonClick={sendNotifications}
+          onButtonClick={sendNotifications}
           onCardClick={onCardClick}
         ></ShowPlayers>
       </div>
@@ -85,9 +112,8 @@ function App() {
         player={selectedPlayer}
         onClose={onModalClose}
       ></ShowDetailModal>
-      <Loading
-      show={showLoading}
-      message={loadingMessage}></Loading>
+      <Loading show={showLoading} message={loadingMessage}></Loading>
+      <Toaster position="bottom-right" reverseOrder={false} />
     </div>
   );
 }
