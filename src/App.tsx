@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App w-full h-screen bg-app-background p-4">
       <Nav></Nav>
-      <div className="flex justify-between">
+      <div className="flex justify-evenly">
         <BuscarJugadores></BuscarJugadores>
         <ShowPlayers></ShowPlayers>
       </div>
